@@ -31,10 +31,14 @@ const RANK_SCORE_MAP = Object.freeze(
 const state = {
   members: [],
   result: null,
-  searchKeyword: ""
+  searchKeyword: "",
+  mobileView: "members"
 };
 
 const elements = {
+  mobileMessageBox: document.querySelector("#mobileMessageBox"),
+  mobileViewButtons: Array.from(document.querySelectorAll("[data-mobile-view-target]")),
+  mobileBalanceButton: document.querySelector("#mobileBalanceButton"),
   memberForm: document.querySelector("#memberForm"),
   editingMemberId: document.querySelector("#editingMemberId"),
   nameInput: document.querySelector("#nameInput"),
@@ -72,6 +76,7 @@ function init() {
   renderRankOptions();
   loadState();
   bindEvents();
+  setMobileView(state.mobileView);
   resetForm();
   render();
 }
@@ -81,10 +86,14 @@ function renderRankOptions() {
 }
 
 function bindEvents() {
+  elements.mobileViewButtons.forEach((button) => {
+    button.addEventListener("click", () => setMobileView(button.dataset.mobileViewTarget || "members"));
+  });
   elements.memberForm.addEventListener("submit", handleSubmitMember);
   elements.cancelEditButton.addEventListener("click", resetForm);
   elements.searchInput.addEventListener("input", handleSearch);
   elements.balanceButton.addEventListener("click", handleBalanceTeams);
+  elements.mobileBalanceButton.addEventListener("click", handleBalanceTeams);
   elements.resetSelectionButton.addEventListener("click", resetSelections);
   elements.restoreDefaultButton.addEventListener("click", restoreDefaultMembers);
   elements.clearMembersButton.addEventListener("click", clearMembers);
@@ -186,6 +195,7 @@ function handleSubmitMember(event) {
   syncResultWithCurrentSelection();
   saveState();
   resetForm();
+  setMobileView("members");
   render();
 }
 
@@ -215,6 +225,7 @@ function render() {
   renderStats();
   renderMemberList();
   renderResult();
+  renderMobileState();
 }
 
 function renderStats() {
@@ -222,6 +233,7 @@ function renderStats() {
   elements.totalMemberCount.textContent = String(state.members.length);
   elements.selectedCount.textContent = String(selectedCount);
   elements.battleCount.textContent = `${selectedCount} 人`;
+  elements.mobileBalanceButton.textContent = `开始分队 · ${selectedCount} 人`;
   elements.selectionHint.textContent = selectedCount >= 6 && selectedCount <= 10
     ? "人数合法，可执行自动分队"
     : "请勾选 6-10 名玩家后自动分队";
@@ -294,6 +306,13 @@ function renderResult() {
   setBalanceBadge(result.balanceLabel, result.balanceLevel);
 }
 
+function renderMobileState() {
+  elements.mobileViewButtons.forEach((button) => {
+    const isActive = button.dataset.mobileViewTarget === state.mobileView;
+    button.classList.toggle("active", isActive);
+  });
+}
+
 function renderTeamMembers(container, members) {
   container.innerHTML = "";
 
@@ -338,6 +357,7 @@ function fillEditForm(memberId) {
   elements.rankSelect.value = member.rank;
   elements.submitButton.textContent = "保存修改";
   elements.cancelEditButton.hidden = false;
+  setMobileView("form");
   elements.nameInput.focus();
 }
 
@@ -438,6 +458,7 @@ function handleBalanceTeams() {
   state.result = result;
   saveState();
   renderResult();
+  setMobileView("result");
   showMessage(`分队完成，当前分差 ${result.scoreDiff}。`, "success");
 }
 
@@ -651,6 +672,18 @@ function showMessage(message, type) {
   if (type) {
     elements.messageBox.classList.add(type);
   }
+
+  elements.mobileMessageBox.textContent = message;
+  elements.mobileMessageBox.className = "mobile-message-box";
+  if (type) {
+    elements.mobileMessageBox.classList.add(type);
+  }
+}
+
+function setMobileView(view) {
+  state.mobileView = view;
+  document.body.dataset.mobileView = view;
+  renderMobileState();
 }
 
 function rankToScore(rank) {

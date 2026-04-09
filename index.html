@@ -31,9 +31,18 @@
       </div>
     </header>
 
+    <section class="mobile-switcher" aria-label="移动端视图切换">
+      <div class="mobile-switch-tabs">
+        <button type="button" class="mobile-switch-tab active" data-mobile-view-target="members">成员</button>
+        <button type="button" class="mobile-switch-tab" data-mobile-view-target="form">新增</button>
+        <button type="button" class="mobile-switch-tab" data-mobile-view-target="result">结果</button>
+      </div>
+      <p id="mobileMessageBox" class="mobile-message-box" aria-live="polite"></p>
+    </section>
+
     <main class="layout">
       <div class="layout-main">
-        <section class="panel panel-compact">
+        <section class="panel panel-compact" data-mobile-panel="form">
           <div class="panel-head">
             <div class="title-wrap">
               <p class="section-tag">成员管理</p>
@@ -70,7 +79,7 @@
           </div>
         </section>
 
-        <section class="panel panel-members">
+        <section class="panel panel-members" data-mobile-panel="members">
           <div class="panel-head panel-head-compact">
             <div class="title-wrap">
               <p class="section-tag">成员列表</p>
@@ -92,7 +101,7 @@
       </div>
 
       <div class="layout-side">
-        <section class="panel action-panel panel-compact">
+        <section class="panel action-panel panel-compact" data-mobile-panel="result">
           <div class="panel-head panel-head-compact">
             <div class="title-wrap">
               <p class="section-tag">本局操作</p>
@@ -115,7 +124,7 @@
           <p id="messageBox" class="message-box" aria-live="polite"></p>
         </section>
 
-        <section class="panel result-panel">
+        <section class="panel result-panel" data-mobile-panel="result">
           <div class="panel-head panel-head-compact">
             <div class="title-wrap">
               <p class="section-tag">分队结果</p>
@@ -157,6 +166,10 @@
         </section>
       </div>
     </main>
+  </div>
+
+  <div class="mobile-action-bar">
+    <button type="button" class="btn btn-primary large mobile-balance-button" id="mobileBalanceButton">开始分队</button>
   </div>
 
   <template id="memberItemTemplate">
