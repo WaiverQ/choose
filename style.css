@@ -835,6 +835,29 @@ select:focus {
     font-size: 17px;
   }
 
+  .panel-members {
+    padding: 12px 12px 10px;
+  }
+
+  .panel-members .panel-head {
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .panel-members .section-tag {
+    display: none;
+  }
+
+  .panel-members .title-wrap h2 {
+    font-size: 15px;
+    line-height: 1.15;
+  }
+
+  .panel-members .panel-meta {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
   .hero-pills {
     display: none;
   }
@@ -893,24 +916,69 @@ select:focus {
     display: none;
   }
 
-  .member-item {
-    grid-template-columns: 36px 1fr;
+  .member-list {
+    gap: 5px;
+    max-height: calc(100vh - 280px);
+    min-height: 240px;
+    padding-right: 2px;
   }
 
   .member-item {
+    grid-template-columns: 36px 1fr;
+    gap: 8px;
+    padding: 6px 7px;
+  }
+
+  .member-toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+  }
+
+  .member-toggle-mark {
+    width: 8px;
+    height: 8px;
+  }
+
+  .member-main {
+    gap: 2px;
+  }
+
+  .member-name-row {
     gap: 6px;
   }
 
-  .member-name-row,
   .member-meta-row {
     align-items: flex-start;
-    flex-direction: column;
-    gap: 4px;
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .member-name {
+    font-size: 12px;
+  }
+
+  .member-rank {
+    font-size: 10px;
+  }
+
+  .member-score {
+    min-width: 30px;
+    padding: 2px 6px;
+    font-size: 10px;
   }
 
   .member-actions {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
+    margin-left: auto;
+  }
+
+  .member-actions .btn-inline {
+    min-height: 24px;
+    padding: 0 7px;
+    border-radius: 10px;
+    font-size: 10px;
   }
 
   [data-mobile-panel] {
