@@ -382,17 +382,29 @@ select:focus {
 .member-list-head,
 .member-item {
   display: grid;
-  grid-template-columns: 46px minmax(0, 1.3fr) minmax(84px, 0.9fr) 64px 112px;
-  gap: 8px;
   align-items: center;
 }
 
 .member-list-head {
-  padding: 0 6px 6px;
+  grid-template-columns: 54px minmax(0, 1fr) 96px;
+  padding: 0 8px 6px;
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-faint);
+}
+
+.member-list-head span:nth-child(2) {
+  grid-column: 2;
+}
+
+.member-list-head span:nth-child(3) {
+  grid-column: 3;
+}
+
+.member-list-head span:nth-child(4),
+.member-list-head span:nth-child(5) {
+  display: none;
 }
 
 .member-list {
@@ -416,17 +428,55 @@ select:focus {
 }
 
 .member-item {
-  padding: 8px 9px;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 10px;
+  padding: 7px 8px;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
+  border-radius: 14px;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02), transparent 32%),
-    rgba(8, 12, 24, 0.62);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025), transparent 38%),
+    rgba(8, 12, 24, 0.72);
+}
+
+.member-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.member-toggle-mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.04);
+}
+
+.member-main {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.member-name-row,
+.member-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .member-name {
+  min-width: 0;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  font-size: 13px;
+  letter-spacing: 0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -434,17 +484,16 @@ select:focus {
 
 .member-rank {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .member-score {
-  justify-self: start;
-  min-width: 38px;
-  padding: 4px 7px;
+  min-width: 34px;
+  padding: 3px 7px;
   border-radius: 999px;
-  background: rgba(92, 163, 255, 0.1);
-  color: #a9d0ff;
-  font-size: 12px;
+  background: linear-gradient(135deg, rgba(92, 163, 255, 0.14), rgba(53, 208, 186, 0.12));
+  color: #d3e8ff;
+  font-size: 11px;
   font-weight: 800;
   text-align: center;
 }
@@ -452,7 +501,7 @@ select:focus {
 .member-actions {
   display: flex;
   gap: 5px;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .checkbox-wrap {
@@ -467,6 +516,13 @@ select:focus {
   margin: 0;
   accent-color: var(--teal);
   cursor: pointer;
+  opacity: 0;
+  position: absolute;
+}
+
+.select-checkbox:checked + .member-toggle-mark {
+  background: var(--teal);
+  box-shadow: 0 0 0 4px rgba(53, 208, 186, 0.12);
 }
 
 .action-panel {
@@ -514,6 +570,79 @@ select:focus {
   margin-bottom: 10px;
 }
 
+.result-summary.compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.scoreboard-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+
+.scoreboard-team,
+.scoreboard-center {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scoreboard-team {
+  display: grid;
+  gap: 4px;
+}
+
+.scoreboard-red {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(255, 93, 115, 0.22), transparent 45%),
+    linear-gradient(180deg, rgba(49, 15, 22, 0.96), rgba(32, 12, 18, 0.9));
+}
+
+.scoreboard-blue {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(92, 163, 255, 0.22), transparent 45%),
+    linear-gradient(180deg, rgba(15, 24, 46, 0.96), rgba(12, 19, 37, 0.9));
+  text-align: right;
+}
+
+.scoreboard-center {
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(10, 15, 28, 0.92);
+}
+
+.scoreboard-label,
+.scoreboard-meta,
+.scoreboard-center-label,
+.scoreboard-versus {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scoreboard-label,
+.scoreboard-meta,
+.scoreboard-center-label {
+  color: var(--text-muted);
+}
+
+.scoreboard-team strong,
+.scoreboard-center strong {
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.scoreboard-center strong {
+  font-size: 28px;
+}
+
 .teams-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -551,6 +680,13 @@ select:focus {
   letter-spacing: 0.04em;
 }
 
+.team-card footer {
+  color: var(--text-faint);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .team-red {
   border: 1px solid rgba(255, 93, 115, 0.26);
   background:
@@ -582,8 +718,8 @@ select:focus {
   gap: 8px;
   padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
 }
 
 .team-member-name {
@@ -647,19 +783,20 @@ select:focus {
 
   .member-list-head,
   .member-item {
-    grid-template-columns: 58px 1fr 1fr;
+    grid-template-columns: 42px minmax(0, 1fr);
   }
 
-  .member-list-head span:nth-child(4),
-  .member-list-head span:nth-child(5),
-  .member-item .member-score,
-  .member-item .member-actions {
-    grid-column: span 3;
+  .member-list-head {
+    grid-template-columns: 54px minmax(0, 1fr) 96px;
   }
 
   .teams-grid,
   .result-summary,
   .action-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .scoreboard-shell {
     grid-template-columns: 1fr;
   }
 }
@@ -757,21 +894,23 @@ select:focus {
   }
 
   .member-item {
-    grid-template-columns: 48px 1fr;
-  }
-
-  .member-item .member-rank,
-  .member-item .member-score,
-  .member-item .member-actions {
-    grid-column: 2;
+    grid-template-columns: 36px 1fr;
   }
 
   .member-item {
     gap: 6px;
   }
 
+  .member-name-row,
+  .member-meta-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .member-actions {
     flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   [data-mobile-panel] {
@@ -799,6 +938,17 @@ select:focus {
 
   .team-member {
     padding: 8px 9px;
+  }
+
+  .scoreboard-team,
+  .scoreboard-center {
+    padding: 12px 10px;
+    border-radius: 16px;
+  }
+
+  .scoreboard-team strong,
+  .scoreboard-center strong {
+    font-size: 26px;
   }
 
   .bulk-actions .btn,

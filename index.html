@@ -133,14 +133,32 @@
             <div class="badge" id="balanceBadge">等待分队</div>
           </div>
 
-          <div class="result-summary">
+          <div class="scoreboard-shell">
+            <section class="scoreboard-team scoreboard-red">
+              <span class="scoreboard-label">Red Squad</span>
+              <strong id="redTeamScore">0</strong>
+              <span class="scoreboard-meta" id="redTeamCount">0 人</span>
+            </section>
+            <div class="scoreboard-center">
+              <span class="scoreboard-versus">VS</span>
+              <strong id="scoreDiffValue">0</strong>
+              <span class="scoreboard-center-label">分差</span>
+            </div>
+            <section class="scoreboard-team scoreboard-blue">
+              <span class="scoreboard-label">Blue Squad</span>
+              <strong id="blueTeamScore">0</strong>
+              <span class="scoreboard-meta" id="blueTeamCount">0 人</span>
+            </section>
+          </div>
+
+          <div class="result-summary compact">
             <div class="summary-card">
               <span>本次参战人数</span>
               <strong id="resultParticipantCount">0</strong>
             </div>
             <div class="summary-card">
-              <span>总分差</span>
-              <strong id="scoreDiffValue">0</strong>
+              <span>均衡评级</span>
+              <strong id="balanceLabelText">等待</strong>
             </div>
           </div>
 
@@ -151,7 +169,7 @@
                 <span id="redTeamCount">0 人</span>
               </header>
               <div id="redTeamList" class="team-list"></div>
-              <footer>总分：<strong id="redTeamScore">0</strong></footer>
+              <footer>整队火力已同步</footer>
             </section>
 
             <section class="team-card team-blue">
@@ -160,7 +178,7 @@
                 <span id="blueTeamCount">0 人</span>
               </header>
               <div id="blueTeamList" class="team-list"></div>
-              <footer>总分：<strong id="blueTeamScore">0</strong></footer>
+              <footer>防守配置已锁定</footer>
             </section>
           </div>
         </section>
@@ -174,16 +192,22 @@
 
   <template id="memberItemTemplate">
     <article class="member-item">
-      <label class="checkbox-wrap">
+      <label class="member-toggle">
         <input type="checkbox" class="select-checkbox">
-        <span class="checkmark"></span>
+        <span class="member-toggle-mark"></span>
       </label>
-      <div class="member-name"></div>
-      <div class="member-rank"></div>
-      <div class="member-score"></div>
-      <div class="member-actions">
-        <button type="button" class="btn btn-inline edit-button">编辑</button>
-        <button type="button" class="btn btn-inline danger delete-button">删除</button>
+      <div class="member-main">
+        <div class="member-name-row">
+          <strong class="member-name"></strong>
+          <span class="member-score"></span>
+        </div>
+        <div class="member-meta-row">
+          <span class="member-rank"></span>
+          <div class="member-actions">
+            <button type="button" class="btn btn-inline edit-button">编辑</button>
+            <button type="button" class="btn btn-inline danger delete-button">删除</button>
+          </div>
+        </div>
       </div>
     </article>
   </template>

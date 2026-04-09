@@ -65,6 +65,7 @@ const elements = {
   blueTeamCount: document.querySelector("#blueTeamCount"),
   resultParticipantCount: document.querySelector("#resultParticipantCount"),
   scoreDiffValue: document.querySelector("#scoreDiffValue"),
+  balanceLabelText: document.querySelector("#balanceLabelText"),
   balanceBadge: document.querySelector("#balanceBadge"),
   memberItemTemplate: document.querySelector("#memberItemTemplate"),
   teamMemberTemplate: document.querySelector("#teamMemberTemplate")
@@ -290,6 +291,7 @@ function renderResult() {
     elements.blueTeamCount.textContent = "0 人";
     elements.resultParticipantCount.textContent = "0";
     elements.scoreDiffValue.textContent = "0";
+    elements.balanceLabelText.textContent = "等待";
     setBalanceBadge("等待分队", "");
     return;
   }
@@ -303,6 +305,7 @@ function renderResult() {
   elements.blueTeamCount.textContent = `${result.blueTeam.length} 人`;
   elements.resultParticipantCount.textContent = String(result.participantCount);
   elements.scoreDiffValue.textContent = String(result.scoreDiff);
+  elements.balanceLabelText.textContent = result.balanceLabel;
   setBalanceBadge(result.balanceLabel, result.balanceLevel);
 }
 
