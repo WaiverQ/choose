@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>无畏契约自定义房间分队工具</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">VALORANT Custom Room Balancer</p>
+        <h1>无畏契约自定义房间分队工具</h1>
+        <p class="hero-text">管理成员、维护段位、勾选本局参战，并按段位分值自动生成尽可能公平的红蓝分队。</p>
+        <div class="hero-pills">
+          <span class="hero-pill">6-10 人房间</span>
+          <span class="hero-pill">最优枚举分队</span>
+          <span class="hero-pill">本地缓存保存</span>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-label">成员总数</span>
+          <strong id="totalMemberCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">本局参战</span>
+          <strong id="selectedCount">0</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-head">
+          <div class="title-wrap">
+            <p class="section-tag">成员管理</p>
+            <h2>新增或编辑成员</h2>
+          </div>
+        </div>
+
+        <form id="memberForm" class="member-form">
+          <input type="hidden" id="editingMemberId">
+          <div class="field-group">
+            <label for="nameInput">昵称</label>
+            <input id="nameInput" name="name" type="text" maxlength="20" placeholder="输入成员昵称">
+          </div>
+          <div class="field-group">
+            <label for="rankSelect">段位</label>
+            <select id="rankSelect" name="rank"></select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submitButton">新增成员</button>
+            <button type="button" class="btn btn-secondary" id="cancelEditButton" hidden>取消编辑</button>
+          </div>
+        </form>
+
+        <div class="tools-row">
+          <div class="search-box">
+            <label for="searchInput">搜索成员</label>
+            <input id="searchInput" type="search" placeholder="按昵称搜索">
+          </div>
+          <div class="bulk-actions">
+            <button type="button" class="btn btn-ghost" id="resetSelectionButton">重置参战选择</button>
+            <button type="button" class="btn btn-warn" id="restoreDefaultButton">恢复默认数据</button>
+            <button type="button" class="btn btn-danger" id="clearMembersButton">清空全部成员</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div class="title-wrap">
+            <p class="section-tag">成员列表</p>
+            <h2>选择本局参战成员</h2>
+          </div>
+          <div class="panel-meta" id="selectionHint">请勾选 6-10 名玩家后自动分队</div>
+        </div>
+
+        <div class="member-list-head">
+          <span>参战</span>
+          <span>昵称</span>
+          <span>段位</span>
+          <span>分值</span>
+          <span>操作</span>
+        </div>
+        <div id="memberList" class="member-list"></div>
+        <div id="emptyState" class="empty-state" hidden>暂无成员，请先新增成员。</div>
+      </section>
+
+      <section class="panel action-panel">
+        <div class="panel-head">
+          <div class="title-wrap">
+            <p class="section-tag">本局操作</p>
+            <h2>自动平衡分队</h2>
+          </div>
+        </div>
+        <div class="action-summary">
+          <div>
+            <span class="summary-label">参战人数</span>
+            <strong id="battleCount">0 人</strong>
+          </div>
+          <div>
+            <span class="summary-label">规则</span>
+            <strong>每队最多 5 人</strong>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <button type="button" class="btn btn-primary large" id="balanceButton">自动分队</button>
+        </div>
+        <p id="messageBox" class="message-box" aria-live="polite"></p>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="panel-head">
+          <div class="title-wrap">
+            <p class="section-tag">分队结果</p>
+            <h2>红队 vs 蓝队</h2>
+          </div>
+          <div class="badge" id="balanceBadge">等待分队</div>
+        </div>
+
+        <div class="result-summary">
+          <div class="summary-card">
+            <span>本次参战人数</span>
+            <strong id="resultParticipantCount">0</strong>
+          </div>
+          <div class="summary-card">
+            <span>总分差</span>
+            <strong id="scoreDiffValue">0</strong>
+          </div>
+        </div>
+
+        <div class="teams-grid">
+          <section class="team-card team-red">
+            <header>
+              <h3>红队</h3>
+              <span id="redTeamCount">0 人</span>
+            </header>
+            <div id="redTeamList" class="team-list"></div>
+            <footer>总分：<strong id="redTeamScore">0</strong></footer>
+          </section>
+
+          <section class="team-card team-blue">
+            <header>
+              <h3>蓝队</h3>
+              <span id="blueTeamCount">0 人</span>
+            </header>
+            <div id="blueTeamList" class="team-list"></div>
+            <footer>总分：<strong id="blueTeamScore">0</strong></footer>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="memberItemTemplate">
+    <article class="member-item">
+      <label class="checkbox-wrap">
+        <input type="checkbox" class="select-checkbox">
+        <span class="checkmark"></span>
+      </label>
+      <div class="member-name"></div>
+      <div class="member-rank"></div>
+      <div class="member-score"></div>
+      <div class="member-actions">
+        <button type="button" class="btn btn-inline edit-button">编辑</button>
+        <button type="button" class="btn btn-inline danger delete-button">删除</button>
+      </div>
+    </article>
+  </template>
+
+  <template id="teamMemberTemplate">
+    <article class="team-member">
+      <div>
+        <strong class="team-member-name"></strong>
+        <p class="team-member-rank"></p>
+      </div>
+      <span class="team-member-score"></span>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
