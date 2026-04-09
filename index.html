@@ -118,6 +118,21 @@
               <strong>每队最多 5 人</strong>
             </div>
           </div>
+          <div class="map-picker-card" id="mapPickerCard">
+            <div class="map-picker-head">
+              <div>
+                <span class="summary-label">自动选图</span>
+                <strong class="map-picker-title">当前赛季地图池随机抽取</strong>
+              </div>
+              <span class="map-picker-count">12 张</span>
+            </div>
+            <div class="map-reel" id="mapReel" aria-live="polite">
+              <span class="map-reel-label">即将抽取</span>
+              <strong id="mapPickerResult">点击开始</strong>
+            </div>
+            <div class="map-chip-list" id="mapChipList"></div>
+            <button type="button" class="btn btn-ghost map-picker-button" id="mapPickerButton">自动选图</button>
+          </div>
           <div class="action-buttons">
             <button type="button" class="btn btn-primary large" id="balanceButton">自动分队</button>
           </div>

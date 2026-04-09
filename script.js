@@ -21,6 +21,22 @@ const DEFAULT_MEMBER_SEEDS = [
   { name: "吴站长", rank: "青铜1", selected: true }
 ];
 
+// Based on the current official VALORANT maps page.
+const MAP_POOL = [
+  "Corrode",
+  "Abyss",
+  "Sunset",
+  "Lotus",
+  "Pearl",
+  "Fracture",
+  "Breeze",
+  "Icebox",
+  "Ascent",
+  "Split",
+  "Haven",
+  "Bind"
+];
+
 const RANK_SCORE_MAP = Object.freeze(
   RANKS.reduce((map, rank, index) => {
     map[rank] = index + 1;
@@ -32,7 +48,10 @@ const state = {
   members: [],
   result: null,
   searchKeyword: "",
-  mobileView: "members"
+  mobileView: "members",
+  selectedMap: "",
+  mapPickerTimer: null,
+  isPickingMap: false
 };
 
 const elements = {
@@ -57,6 +76,10 @@ const elements = {
   resetSelectionButton: document.querySelector("#resetSelectionButton"),
   restoreDefaultButton: document.querySelector("#restoreDefaultButton"),
   clearMembersButton: document.querySelector("#clearMembersButton"),
+  mapPickerCard: document.querySelector("#mapPickerCard"),
+  mapPickerButton: document.querySelector("#mapPickerButton"),
+  mapPickerResult: document.querySelector("#mapPickerResult"),
+  mapChipList: document.querySelector("#mapChipList"),
   redTeamList: document.querySelector("#redTeamList"),
   blueTeamList: document.querySelector("#blueTeamList"),
   redTeamScore: document.querySelector("#redTeamScore"),
@@ -76,6 +99,7 @@ init();
 function init() {
   renderRankOptions();
   loadState();
+  renderMapPool();
   bindEvents();
   setMobileView(state.mobileView);
   resetForm();
@@ -95,6 +119,7 @@ function bindEvents() {
   elements.searchInput.addEventListener("input", handleSearch);
   elements.balanceButton.addEventListener("click", handleBalanceTeams);
   elements.mobileBalanceButton.addEventListener("click", handleBalanceTeams);
+  elements.mapPickerButton.addEventListener("click", handlePickMap);
   elements.resetSelectionButton.addEventListener("click", resetSelections);
   elements.restoreDefaultButton.addEventListener("click", restoreDefaultMembers);
   elements.clearMembersButton.addEventListener("click", clearMembers);
@@ -226,6 +251,7 @@ function render() {
   renderStats();
   renderMemberList();
   renderResult();
+  renderMapPicker();
   renderMobileState();
 }
 
@@ -314,6 +340,19 @@ function renderMobileState() {
     const isActive = button.dataset.mobileViewTarget === state.mobileView;
     button.classList.toggle("active", isActive);
   });
+}
+
+function renderMapPool() {
+  elements.mapChipList.innerHTML = MAP_POOL
+    .map((map) => `<span class="map-chip">${map}</span>`)
+    .join("");
+}
+
+function renderMapPicker() {
+  elements.mapPickerResult.textContent = state.selectedMap || "点击开始";
+  elements.mapPickerCard.classList.toggle("is-picking", state.isPickingMap);
+  elements.mapPickerButton.disabled = state.isPickingMap;
+  elements.mapPickerButton.textContent = state.isPickingMap ? "抽取中..." : "自动选图";
 }
 
 function renderTeamMembers(container, members) {
@@ -433,6 +472,39 @@ function restoreDefaultMembers() {
   resetForm();
   render();
   showMessage("已恢复默认成员数据。", "success");
+}
+
+function handlePickMap() {
+  if (state.isPickingMap) {
+    return;
+  }
+
+  state.isPickingMap = true;
+  const totalSteps = 18;
+  let step = 0;
+  let lastMap = MAP_POOL[0];
+
+  renderMapPicker();
+
+  const spin = () => {
+    const nextMap = MAP_POOL[Math.floor(Math.random() * MAP_POOL.length)];
+    lastMap = nextMap;
+    elements.mapPickerResult.textContent = nextMap;
+    step += 1;
+
+    if (step >= totalSteps) {
+      state.mapPickerTimer = null;
+      state.isPickingMap = false;
+      state.selectedMap = lastMap;
+      renderMapPicker();
+      showMessage(`本局随机地图：${lastMap}`, "success");
+      return;
+    }
+
+    state.mapPickerTimer = window.setTimeout(spin, 65 + (step * 16));
+  };
+
+  spin();
 }
 
 function getSelectedMembers() {
