@@ -19,7 +19,7 @@
   --blue-soft: rgba(92, 163, 255, 0.14);
   --danger: #ff826d;
   --danger-soft: rgba(255, 130, 109, 0.14);
-  --shadow: 0 28px 60px rgba(0, 0, 0, 0.34);
+  --shadow: 0 24px 54px rgba(0, 0, 0, 0.32);
   --radius-xl: 28px;
   --radius-lg: 20px;
   --radius-md: 16px;
@@ -59,18 +59,18 @@ body::before {
 
 .app-shell {
   position: relative;
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 28px 18px 56px;
+  padding: 14px 16px 16px;
 }
 
 .hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 360px);
-  gap: 18px;
-  margin-bottom: 22px;
-  padding: 26px;
+  grid-template-columns: minmax(0, 1.7fr) minmax(220px, 300px);
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 16px 18px;
   border: 1px solid var(--panel-border-strong);
   border-radius: 32px;
   background:
@@ -92,15 +92,19 @@ body::before {
   filter: blur(8px);
 }
 
-.hero-main {
+.hero-main,
+.hero-stats,
+.team-card header,
+.team-card footer,
+.team-list {
   position: relative;
   z-index: 1;
 }
 
 .eyebrow,
 .section-tag {
-  margin: 0 0 10px;
-  font-size: 11px;
+  margin: 0 0 6px;
+  font-size: 10px;
   line-height: 1;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -110,49 +114,48 @@ body::before {
 .hero h1 {
   margin: 0;
   max-width: 760px;
-  font-size: clamp(30px, 4vw, 48px);
-  line-height: 1.05;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.02;
   letter-spacing: 0.02em;
 }
 
 .hero-text {
-  max-width: 680px;
-  margin: 16px 0 0;
-  font-size: 15px;
-  line-height: 1.75;
+  max-width: 720px;
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
   color: var(--text-muted);
 }
 
 .hero-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 6px;
+  margin-top: 10px;
 }
 
-.hero-pill {
+.hero-pill,
+.badge {
   display: inline-flex;
   align-items: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  min-height: 26px;
+  padding: 0 9px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
-  font-size: 12px;
-  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .hero-stats {
-  position: relative;
-  z-index: 1;
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stat-card {
-  padding: 18px 18px 16px;
+  padding: 12px 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 22px;
+  border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
   backdrop-filter: blur(10px);
@@ -170,20 +173,29 @@ body::before {
 
 .stat-card strong {
   display: block;
-  margin-top: 10px;
-  font-size: 34px;
+  margin-top: 6px;
+  font-size: 24px;
   font-weight: 800;
   line-height: 1;
 }
 
 .layout {
   display: grid;
-  gap: 18px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(330px, 410px);
+  gap: 12px;
+  align-items: start;
+}
+
+.layout-main,
+.layout-side {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
 }
 
 .panel {
   position: relative;
-  padding: 22px;
+  padding: 16px;
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-xl);
   background:
@@ -202,36 +214,48 @@ body::before {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 18%);
 }
 
+.panel-compact {
+  padding: 14px 16px;
+}
+
+.panel-members {
+  min-height: 0;
+}
+
 .panel-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.panel-head-compact {
+  margin-bottom: 10px;
 }
 
 .title-wrap h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 19px;
   letter-spacing: 0.02em;
 }
 
 .member-form {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(180px, 1fr) auto;
-  gap: 14px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(150px, 0.9fr) auto;
+  gap: 8px;
   align-items: end;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .field-group label,
 .search-box label {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--text);
 }
@@ -245,8 +269,8 @@ button {
 input,
 select {
   width: 100%;
-  height: 48px;
-  padding: 0 14px;
+  height: 38px;
+  padding: 0 11px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   background: rgba(6, 10, 22, 0.44);
@@ -270,7 +294,7 @@ select:focus {
 .action-buttons,
 .bulk-actions {
   display: flex;
-  gap: 10px;
+  gap: 6px;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -278,22 +302,22 @@ select:focus {
 .tools-row {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px;
   align-items: end;
-  margin-top: 18px;
+  margin-top: 10px;
 }
 
 .search-box {
   flex: 1;
-  max-width: 320px;
+  max-width: 220px;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 16px;
+  min-height: 34px;
+  padding: 0 12px;
   border: 1px solid transparent;
   border-radius: 14px;
   cursor: pointer;
@@ -309,7 +333,7 @@ select:focus {
   background: linear-gradient(135deg, var(--teal), var(--teal-deep));
   color: #041812;
   font-weight: 800;
-  box-shadow: 0 12px 30px rgba(20, 157, 139, 0.28);
+  box-shadow: 0 12px 28px rgba(20, 157, 139, 0.28);
 }
 
 .btn-primary:hover {
@@ -320,7 +344,7 @@ select:focus {
 .btn-ghost,
 .btn-inline {
   border-color: rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text);
 }
 
@@ -337,23 +361,30 @@ select:focus {
   color: #ffb19f;
 }
 
+.btn-inline {
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: 12px;
+  font-size: 11px;
+}
+
 .btn.large {
-  min-width: 220px;
-  min-height: 52px;
-  font-size: 16px;
+  width: 100%;
+  min-height: 40px;
+  font-size: 14px;
 }
 
 .member-list-head,
 .member-item {
   display: grid;
-  grid-template-columns: 70px 1.25fr 1fr 92px 154px;
-  gap: 12px;
+  grid-template-columns: 46px minmax(0, 1.3fr) minmax(84px, 0.9fr) 64px 112px;
+  gap: 8px;
   align-items: center;
 }
 
 .member-list-head {
-  padding: 0 10px 12px;
-  font-size: 12px;
+  padding: 0 6px 6px;
+  font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-faint);
@@ -362,13 +393,27 @@ select:focus {
 .member-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  max-height: min(38vh, 360px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.member-list::-webkit-scrollbar,
+.team-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.member-list::-webkit-scrollbar-thumb,
+.team-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
 }
 
 .member-item {
-  padding: 14px 12px;
+  padding: 8px 9px;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 18px;
+  border-radius: 16px;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.02), transparent 32%),
     rgba(8, 12, 24, 0.62);
@@ -377,57 +422,63 @@ select:focus {
 .member-name {
   font-weight: 800;
   letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .member-rank {
   color: var(--text-muted);
+  font-size: 12px;
 }
 
 .member-score {
   justify-self: start;
-  min-width: 52px;
-  padding: 7px 10px;
+  min-width: 38px;
+  padding: 4px 7px;
   border-radius: 999px;
   background: rgba(92, 163, 255, 0.1);
   color: #a9d0ff;
+  font-size: 12px;
   font-weight: 800;
   text-align: center;
 }
 
 .member-actions {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-start;
 }
 
 .checkbox-wrap {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
 }
 
 .select-checkbox {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
+  margin: 0;
   accent-color: var(--teal);
   cursor: pointer;
 }
 
 .action-panel {
   display: grid;
-  gap: 16px;
+  gap: 10px;
 }
 
 .action-summary,
 .result-summary {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 8px;
 }
 
 .action-summary > div,
 .summary-card {
-  padding: 16px 18px;
+  padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 18px;
   background: rgba(8, 12, 24, 0.54);
@@ -436,26 +487,14 @@ select:focus {
 .action-summary strong,
 .summary-card strong {
   display: block;
-  margin-top: 8px;
-  font-size: 24px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  font-size: 13px;
-  font-weight: 800;
+  margin-top: 4px;
+  font-size: 18px;
 }
 
 .message-box {
-  min-height: 20px;
+  min-height: 16px;
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .message-box.success {
@@ -467,20 +506,20 @@ select:focus {
 }
 
 .result-summary {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .teams-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 8px;
 }
 
 .team-card {
   position: relative;
-  padding: 18px;
-  border-radius: 24px;
-  min-height: 280px;
+  padding: 12px;
+  border-radius: 22px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -496,8 +535,6 @@ select:focus {
 
 .team-card header,
 .team-card footer {
-  position: relative;
-  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -505,7 +542,7 @@ select:focus {
 
 .team-card h3 {
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
   letter-spacing: 0.04em;
 }
 
@@ -524,21 +561,21 @@ select:focus {
 }
 
 .team-list {
-  position: relative;
-  z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin: 16px 0;
+  gap: 6px;
+  margin: 10px 0;
+  overflow: auto;
+  max-height: min(26vh, 220px);
 }
 
 .team-member {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 14px;
+  gap: 8px;
+  padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
@@ -546,30 +583,41 @@ select:focus {
 
 .team-member-name {
   display: block;
-  margin-bottom: 4px;
-  font-size: 15px;
+  margin-bottom: 2px;
+  font-size: 13px;
   letter-spacing: 0.02em;
 }
 
+.team-member-rank {
+  margin: 0;
+  font-size: 11px;
+}
+
 .team-member-score {
-  min-width: 46px;
-  padding: 7px 0;
+  min-width: 34px;
+  padding: 4px 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   text-align: center;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 900;
 }
 
 .empty-state {
-  padding: 24px;
+  padding: 14px;
   border: 1px dashed rgba(255, 255, 255, 0.12);
   border-radius: 18px;
   text-align: center;
   background: rgba(255, 255, 255, 0.02);
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .layout-main,
+  .layout-side,
   .hero,
   .tools-row,
   .member-form,
@@ -582,9 +630,19 @@ select:focus {
     max-width: none;
   }
 
+  .member-list {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .team-list {
+    max-height: none;
+  }
+
   .member-list-head,
   .member-item {
-    grid-template-columns: 62px 1fr 1fr;
+    grid-template-columns: 58px 1fr 1fr;
   }
 
   .member-list-head span:nth-child(4),
@@ -592,11 +650,6 @@ select:focus {
   .member-item .member-score,
   .member-item .member-actions {
     grid-column: span 3;
-  }
-
-  .member-item .member-score,
-  .member-item .member-actions {
-    padding-left: 0;
   }
 
   .teams-grid,
@@ -608,17 +661,36 @@ select:focus {
 
 @media (max-width: 640px) {
   .app-shell {
-    padding: 16px 12px 28px;
+    padding: 10px 10px 18px;
   }
 
   .hero,
-  .panel {
-    padding: 18px;
-    border-radius: 24px;
+  .panel,
+  .panel-compact {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .hero {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .hero h1 {
-    font-size: 30px;
+    font-size: 22px;
+  }
+
+  .hero-text {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .title-wrap h2 {
+    font-size: 17px;
   }
 
   .member-list-head {
@@ -626,7 +698,7 @@ select:focus {
   }
 
   .member-item {
-    grid-template-columns: 52px 1fr;
+    grid-template-columns: 48px 1fr;
   }
 
   .member-item .member-rank,
@@ -635,9 +707,37 @@ select:focus {
     grid-column: 2;
   }
 
+  .member-item {
+    gap: 6px;
+  }
+
+  .member-actions {
+    flex-wrap: wrap;
+  }
+
+  .action-summary > div,
+  .summary-card {
+    padding: 9px 10px;
+  }
+
+  .team-card {
+    padding: 10px;
+  }
+
+  .team-member {
+    padding: 8px 9px;
+  }
+
   .bulk-actions .btn,
   .form-actions .btn,
   .action-buttons .btn {
     width: 100%;
+  }
+
+  .bulk-actions,
+  .form-actions,
+  .action-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
