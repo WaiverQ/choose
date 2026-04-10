@@ -21,20 +21,19 @@ const DEFAULT_MEMBER_SEEDS = [
   { name: "吴站长", rank: "青铜1", selected: true }
 ];
 
-// Based on the current official VALORANT maps page.
 const MAP_POOL = [
-  "Corrode",
-  "Abyss",
-  "Sunset",
-  "Lotus",
-  "Pearl",
-  "Fracture",
-  "Breeze",
-  "Icebox",
-  "Ascent",
-  "Split",
-  "Haven",
-  "Bind"
+  "盐海矿镇",
+  "幽邃地窟",
+  "日落之城",
+  "莲花古城",
+  "深海明珠",
+  "裂变峡谷",
+  "微风岛屿",
+  "森寒冬港",
+  "亚海悬城",
+  "霓虹町",
+  "隐世修所",
+  "源工重镇"
 ];
 
 const RANK_SCORE_MAP = Object.freeze(
